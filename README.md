@@ -15,7 +15,8 @@
  
 ## 识别Recon
 那么如何识别你校是否也存在此漏洞？<br><br>
-打开你的校园网认证界面，如果在任意位置你找到了包含*Guangzhou Hotspot Software Technology Co., Ltd* 或者 *本XX系统由广州热点软件科技股份有限公司提供*的Powerby信息，那么🎉con graduation，你所在的校园认证系统中很有可能存在此漏洞。赶紧挑个倒霉蛋试试吧🥚
+打开你的校园网认证界面，如果在任意位置你找到了包含*Guangzhou Hotspot Software Technology Co., Ltd* 或者 *本XX系统由广州热点软件科技股份有限公司提供*的Powerby信息，又或者你误打误撞发现了某个带**eportal字符串的路径**<br>
+那么🎉con graduation，你所在的校园认证系统中很有可能存在此漏洞。赶紧挑个倒霉蛋试试吧🥚
 
 
 # 原理 -Principle
