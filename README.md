@@ -1,5 +1,5 @@
 # DrcomCutdown
-Dr.com Eportal校园网认证--踹人下线脚本
+Dr.com Eportal校园网认证系统任意踹人下线（断网）漏洞 附脚本
 
 😎测试版本:
   **Guangzhou Hotspot Software Technology Co., Ltd. © 2020   EPortal4.1.3**
@@ -8,7 +8,7 @@ Dr.com Eportal校园网认证--踹人下线脚本
   用此脚本可以将校园网内任意已登陆设备强制踹下线，实现断网效果（前提是得知道目标内网ip地址）
 
 # 原理 -Principle
-由于未对unbind路由做验证，导致任意知道受害者内网ip地址的人员，在使用一个简易将ip地址转换为int整型数字的算法后，可以实现无授权解绑目标mac地址，实现断网效果。
+由于未对unbind路由做验证，导致任意知道受害者内网ip地址的人员，在使用一个简易将ip地址转换为int整型数字的算法后(已附脚本，算法在脚本里面)，可以实现无授权解绑目标mac地址，实现断网效果。
 
 ***POC:***
 ```
