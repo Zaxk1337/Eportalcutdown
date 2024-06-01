@@ -1,5 +1,5 @@
 # Dr.com Eportal校园网认证系统未授权断网漏洞 -附脚本
-<img width="500" height="500" alt="image" src="https://github.com/Zaxk1337/DrcomCutdown/assets/164832393/f4107b1c-d880-4688-8a32-921a0b95406d">
+<img width="800" height="300" alt="image" src="https://github.com/Zaxk1337/DrcomCutdown/assets/164832393/f4107b1c-d880-4688-8a32-921a0b95406d">
 
 # DrcomCutdown
 
