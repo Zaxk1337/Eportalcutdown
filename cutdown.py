@@ -31,6 +31,6 @@ def cutdown(ipint):
         print(f"Status_Code: {r.status_code}")
 
 if __name__ == "__main__":
-    ipAddress = input("Target that u wanna cutdown?(ipv4):")
+    ipAddress = input("想断谁网?(内网ipv4地址):")
     print(f"[*] Target:{ipAddress}")
     cutdown(ip_to_int(ipAddress))
