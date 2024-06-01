@@ -1,7 +1,7 @@
-# Dr.com Eportal服务器管理系统未授权断网漏洞 -附脚本
+# Dr.com Eportal校园网管理系统未授权断网漏洞 -附脚本
 <img width="800" height="300" alt="image" src="https://github.com/Zaxk1337/DrcomCutdown/assets/164832393/f4107b1c-d880-4688-8a32-921a0b95406d">
 
-# DrcomCutdown
+# Eportalcutdown
 
 😎测试版本:
   **Guangzhou Hotspot Software Technology Co., Ltd. © 2020   EPortal4.1.3**
