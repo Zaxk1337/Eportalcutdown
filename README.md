@@ -18,6 +18,4 @@ User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/201001
 Accept: */*
 Accept-Language: en-US,en;q=0.5
 Accept-Encoding: gzip, deflate, br
-Connection: close
-Referer: http://192.168.10.154/
 ```
