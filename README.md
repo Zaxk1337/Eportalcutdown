@@ -7,7 +7,7 @@
   **Guangzhou Hotspot Software Technology Co., Ltd. © 2020   EPortal4.1.3**
 
 🥳效果:
-  你是否受够了室友半夜两三点还在激情csgo？是否受够了每当你正要进入梦乡和小美大战800回合的时候，你的室友突然在游戏中破防爆粗口？<br>
+  你是否受够了室友半夜两三点还在激情csgo/瓦？是否受够了每当你正要进入梦乡和小美大战800回合的时候，你的室友突然在游戏中破防爆粗口？<br>
   <br>
   Fine，Using this！<br>
   <br>
